@@ -1,6 +1,9 @@
+const GOOGLE_OAUTH = "GOOGLE_OAUTH";
+const AUTH = "AUTH";
+const LOGOUT = "LOGOUT";
 const FETCH_ALL = "FETCH_ALL";
 const CREATE = "CREATE";
 const UPDATE = "UPDATE";
 const DELETE = "DELETE";
 const LIKE = "LIKE";
-export const TYPES = { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE };
+export const TYPES = { GOOGLE_OAUTH, AUTH, LOGOUT, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE };

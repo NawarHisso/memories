@@ -1,20 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
+
+import {googleLogOut} from '../../actions/auth'
 
 import useStyles from "./styles";
 import memories from "../../images/memories.png";
 
 const Navbar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  const user = null;
+  console.log(user);
+
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location]);
+
+  const handleLogout = () => {
+    dispatch(googleLogOut(history));
+    setUser(null);
+  }
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>
         <Typography
           component={Link}
+          to="/"
           className={classes.heading}
           variant="h2"
           align="center"
@@ -45,6 +64,7 @@ const Navbar = () => {
               variant="contained"
               className={classes.logout}
               color="secondary"
+              onClick={handleLogout}
             >
               Logout
             </Button>
@@ -56,7 +76,7 @@ const Navbar = () => {
             variant="contained"
             color="primary"
           >
-            Login
+            Sign In
           </Button>
         )}
       </Toolbar>
