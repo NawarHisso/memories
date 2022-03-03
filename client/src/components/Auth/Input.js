@@ -1,32 +1,55 @@
-import React from 'react'
-import { TextField, Grid, InputAdornment, IconButton } from '@material-ui/core'
-import { Visibility, VisibilityOff } from '@material-ui/icons'
+import React from "react";
+import { TextField, Grid, InputAdornment, IconButton } from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
-const Input = ({name, label, half, autoFocus, type, handleChange, handleTogglePassword }) => {
+const Input = ({
+  name,
+  label,
+  half,
+  autoFocus,
+  type,
+  handleChange,
+  handleTogglePassword,
+  handleToggleConfirmPassword,
+}) => {
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
-        <TextField
-            name={name}
-            label={label}
-            onChange={handleChange}
-            variant='outlined'
-            required
-            fullWidth
-            autoFocus={autoFocus}
-            type={type}
-            InputProps={name === 'password' || name === 'confirmPassword' ? {
+      <TextField
+        name={name}
+        label={label}
+        onChange={handleChange}
+        variant="outlined"
+        required
+        fullWidth
+        autoFocus={autoFocus}
+        type={type}
+        InputProps={
+          name === "password"
+            ? {
                 endAdornment: (
-                    <InputAdornment position='end'>
-                        <IconButton onClick={handleTogglePassword}>
-                            {type === 'password' ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                    </InputAdornment>
-                )
-            } : null}
-            xs={6}
-        />
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleTogglePassword}>
+                      {type === "password" ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }
+            : name === "confirmPassword"
+            ? {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleToggleConfirmPassword}>
+                      {type === "password" ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }
+            : null
+        }
+        xs={6}
+      />
     </Grid>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

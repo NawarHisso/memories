@@ -9,9 +9,9 @@ import useStyle from "./styles";
 
 const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyle();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -33,9 +33,11 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
     clear();
   };
@@ -43,13 +45,22 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please sign in to create your own memories!
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -62,17 +73,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating"} a Memory
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(event) =>
-            setPostData({ ...postData, creator: event.target.value })
-          }
-        />
-
         <TextField
           name="title"
           variant="outlined"
@@ -88,6 +88,8 @@ const Form = ({ currentId, setCurrentId }) => {
           name="message"
           variant="outlined"
           label="Message"
+          multiline
+          rows={4}
           fullWidth
           value={postData.message}
           onChange={(event) =>
@@ -98,7 +100,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField
           name="tags"
           variant="outlined"
-          label="Tags"
+          label="Tags (coma separated)"
           fullWidth
           value={postData.tags}
           onChange={(event) =>

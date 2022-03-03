@@ -1,13 +1,14 @@
 import { TYPES } from "../constants/actionTypes";
 
-const reducer = (state = {authData: null}, action) => {
+const reducer = (state = { authData: null }, action) => {
   switch (action.type) {
     case TYPES.GOOGLE_OAUTH:
-      localStorage.setItem('profile', JSON.stringify({...action?.payload}));
-      return {...state, authData: action?.payload};
+    case TYPES.AUTH:
+      localStorage.setItem("profile", JSON.stringify({ ...action?.payload }));
+      return { ...state, authData: action?.payload };
     case TYPES.LOGOUT:
       localStorage.clear();
-      return {...state, authData: null};
+      return { ...state, authData: null };
     default:
       return state;
   }

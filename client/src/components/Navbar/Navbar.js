@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
+import decode from "jwt-decode";
 
-import {googleLogOut} from '../../actions/auth'
+import { logOut } from "../../actions/auth";
 
 import useStyles from "./styles";
 import memories from "../../images/memories.png";
@@ -13,20 +14,28 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   console.log(user);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logOut(history));
+    setUser(null);
+  }, [dispatch, history]);
 
   useEffect(() => {
     const token = user?.token;
 
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location]);
+    if (token) {
+      const decodedToken = decode(token);
 
-  const handleLogout = () => {
-    dispatch(googleLogOut(history));
-    setUser(null);
-  }
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        handleLogout();
+      }
+    }
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location, handleLogout, user?.token]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
