@@ -11,6 +11,17 @@ const useStyles = makeStyles((theme) => ({
   actionDiv: {
     textAlign: "center",
   },
+  paper: {
+    padding: theme.spacing(2),
+  },
+  isLoading: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+    borderRadius: "15px",
+    height: "39vh",
+  },
 }));
 
 export default useStyles;

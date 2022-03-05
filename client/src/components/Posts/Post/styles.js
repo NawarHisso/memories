@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+export default makeStyles({
   media: {
     height: 0,
     paddingTop: "56.25%",
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "space-between",
     borderRadius: "15px",
-    height: "100%",
+    height: "400px",
     position: "relative",
   },
   overlay: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   overlay2: {
     position: "absolute",
     top: "20px",
-    right: "20px",
+    right: "0",
     color: "white",
   },
   grid: {
@@ -49,6 +49,8 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
+  cardAction: {
+    display: "block",
+    textAlign: "initial",
+  },
 });
-
-export default useStyles;

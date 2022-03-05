@@ -49,10 +49,8 @@ const Auth = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isSignUp) {
-      console.log("signUp");
       dispatch(signUp(formData, history));
     } else {
-      console.log("signIn");
       dispatch(signIn(formData, history));
     }
   };
@@ -78,7 +76,7 @@ const Auth = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Paper className={classes.paper} elevation={3}>
+      <Paper className={classes.paper} elevation={6}>
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>

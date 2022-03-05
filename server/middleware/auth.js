@@ -20,9 +20,9 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?.sub;
     }
 
-    // if (!req.userId) {
-    //   return res.status(403).json({ message: "Unauthenticated" });
-    // }
+    if (!req.userId) {
+      return res.status(403).json({ message: "Unauthenticated" });
+    }
 
     next();
   } catch (error) {
